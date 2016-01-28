@@ -56,11 +56,11 @@ font-weight: normal;
 ----------------------------------------------- */
 .page-wrapper {
 position: relative;
-background: rgb(250,255,195);
+background: rgb(252,250,220);
 margin: 20px auto;
 padding: 0;
 width: 700px;
-border: 4px solid #fff;
+border: 4px solid rgb(220,220,220);
 min-height: 600px;
 }
 
@@ -69,7 +69,7 @@ min-height: 600px;
   height: 200px;
   width: 300px;
   margin: 0;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid rgb(220,220,220);
 }
 
 .bannerRight {
@@ -80,14 +80,14 @@ min-height: 600px;
   padding-left: 20px;
   padding-top: 20px;
   height: 180px;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid rgb(220,220,220);
 }
 
 .content {
 margin: 0 0 0 150px;
 width: 480px;
 background: transparent;
-border-left: 1px solid #fff;
+border-left: 1px solid rgb(220,220,220);
 padding-left: 20px;
 padding-top:20px;
 }
@@ -97,7 +97,7 @@ position: absolute;
 top: 200px;
 left: 0;
 width: 150px;
-border-right: 1px solid #fff;
+border-right: 1px solid rgb(220,220,220);
 }
 
 
