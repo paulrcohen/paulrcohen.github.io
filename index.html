@@ -1,59 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Paul Cohen</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paul Cohen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c1917;
+    --paper: #faf8f4;
+    --cream: #f0ece4;
+    --accent: #9a3412;
+    --accent-hover: #c2410c;
+    --muted: #78716c;
+    --rule: #d6d0c6;
+    --serif: 'Crimson Pro', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
 
-	<link rel="stylesheet" media="screen" href="sitestyle.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="author" content="Paul Cohen">
-	<meta name="description" content="Paul Cohen's web site">
-	<meta name="robots" content="all">
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  a:hover { color: var(--accent-hover); }
+
+  /* --- Layout --- */
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* --- Header / Nav --- */
+  header {
+    padding: 3rem 0 0;
+  }
+
+  nav {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  nav .name {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    margin-right: auto;
+  }
+
+  nav a.nav-link {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  nav a.nav-link:hover { color: var(--ink); }
+
+  /* --- Hero / Intro --- */
+  .hero {
+    padding: 4rem 0 3.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 2.8rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+
+  .hero .subtitle {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero .bio {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #44403c;
+  }
+
+  .hero .bio p + p {
+    margin-top: 1.2rem;
+  }
+
+  /* --- Sections --- */
+  section {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  section:last-of-type {
+    border-bottom: none;
+  }
+
+  .section-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.8rem;
+  }
+
+  /* --- Career Timeline --- */
+  .timeline {
+    list-style: none;
+  }
+
+  .timeline li {
+    padding: 0.8rem 0;
+    border-top: 1px solid var(--cream);
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+
+  .timeline li:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .timeline .year {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  .timeline .role {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .timeline .role strong {
+    font-weight: 500;
+  }
+
+  .timeline .role .org {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* --- Selected Resources --- */
+  .pub-list {
+    list-style: none;
+  }
+
+  .pub-list li {
+    padding: 1rem 0;
+    border-top: 1px solid var(--cream);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+  }
+
+  .pub-list li:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .pub-title {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .pub-title a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .pub-title a:hover {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .pub-meta {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* --- Contact --- */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .contact-item {
+    font-size: 0.95rem;
+  }
+
+  .contact-item .label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .contact-item a {
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .contact-item a:hover {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* --- Footer --- */
+  footer {
+    padding: 2.5rem 0 4rem;
+    text-align: center;
+  }
+
+  footer p {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* --- Animations --- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero h1 { animation: fadeUp 0.7s ease-out both; }
+  .hero .subtitle { animation: fadeUp 0.7s ease-out 0.1s both; }
+  .hero .bio { animation: fadeUp 0.7s ease-out 0.2s both; }
+  section:nth-of-type(1) { animation: fadeUp 0.6s ease-out 0.3s both; }
+  section:nth-of-type(2) { animation: fadeUp 0.6s ease-out 0.4s both; }
+  section:nth-of-type(3) { animation: fadeUp 0.6s ease-out 0.5s both; }
+
+  /* --- Responsive --- */
+  @media (max-width: 600px) {
+    body { font-size: 17px; }
+    .hero h1 { font-size: 2.1rem; }
+    .hero { padding: 3rem 0 2.5rem; }
+    .timeline li {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+    nav { gap: 1.2rem; }
+    .pub-list li {
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+  }
+</style>
 </head>
+<body>
 
+<header>
+  <div class="page">
+    <nav>
+      <a href="#" class="name">Paul Cohen</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#career" class="nav-link">Career</a>
+      <a href="#publications" class="nav-link">Publications</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+  </div>
+</header>
 
-<body id="cohen-site">
-<div class="page-wrapper">
-    
-    <div class="bannerLeft" 
-      style="background: transparent url(head.jpg) top left no-repeat;
-      background-size:contain;">
-    </div> 
-    
-    <div class="bannerRight">
-      <h3>Paul Cohen</h3>
-    </div> 
-    
-    <div class="content" id="biography" role="article">
-      <h3>biography</h3>
-			<p>Currently I am a program manager in <a href="http://www.darpa.mil">DARPA's</a> Information Innovation Office, where I designed and manage the <a href="http://www.darpa.mil/program/big-mechanism">Big Mechanism</a> and <a href="http://www.darpa.mil/program/communicating-with-computers">Communicating with Computers</a> programs.  I am also a professor at the University of Arizona, where I served as head of Computer Science and founded the School of Information: Science, Technology and Arts (<a href="http://sista.arizona.edu">SISTA</a>, now part of <a href="http://si.arizona.edu">SI</a>). My research is in aspects of artificial intelligence and cognitive science.  I am interested in language, communication, and AI methods to help us understand very complicated systems such as cell signaling pathways.
-			</p>
-			</div>
-			
-<!-- Contact info and navigation menu 
-     ================================  
-/-->
- 
-    <div class="contactInfo" id="summary" role="article">
-      <p> Contact: 
-      <br>
-			<br>paulrcohen at <br>gmail dot com
-			<br><br>paul dot cohen at darpa dot mil
-			</p>
-			<br>
-			<ul>  
-			  <p>
-			  <li><a href="index.html">Home</a></li>
-			  <li><a href="1vita-complete.pdf">Curriculum Vitae</a></li>
-			  <li><a href="publications.html">Publications</a></li>
-			  <li><a href="opinions.html">Blogs and Essays</a></li>
-			  <li><a href="press.html">Press</a></li>
-			  <li><a href = "videos.html">Videos</a></li>
-			  </p>
-			</ul>
-			
+<div class="page">
+
+  <div class="hero" id="about">
+    <h1>Paul Cohen</h1>
+    <div class="subtitle">Professor · University of Pittsburgh</div>
+    <div class="bio">
+      <p>
+        I'm a researcher in artificial intelligence and cognitive science at the
+        <a href="http://sci.pitt.edu">School of Computing and Information</a> at the University of
+        Pittsburgh, where I served as Founding Dean from 2017 to 2020. My work explores
+        language, communication, and AI methods for modeling complicated systems — from
+        cell signaling pathways to local belief systems to intellectual biographies.
+      </p>
+      <p>
+        From 2013 to 2017, I was a program manager at
+        <a href="http://www.darpa.mil">DARPA</a>'s Information Innovation Office,
+        where I designed and managed the
+        <a href="https://www.darpa.mil/research/programs/big-mechanism">Big Mechanism</a>,
+        <a href="http://www.darpa.mil/program/communicating-with-computers">Communicating with Computers</a>, and
+        <a href="http://www.darpa.mil/program/world-modelers">World Modelers</a> programs.
+        Before DARPA, I was at the University of Arizona, where I headed Computer Science and helped to create SISTA, which became the
+        <a href="http://si.arizona.edu">School of Information</a>.
+      </p>
+      <p>
+        I also manage the Harold Cohen Trust, preserving the work and legacy of pioneering
+        computer artist Harold Cohen and his AI art system AARON.
+      </p>
     </div>
+  </div>
+
+  <section id="career">
+    <div class="section-label">Career</div>
+    <ul class="timeline">
+      <li>
+        <span class="year">2020 – present</span>
+        <div class="role"><strong>Professor</strong> <span class="org">· School of Computing and Information, University of Pittsburgh</span></div>
+      </li>
+      <li>
+        <span class="year">2017 – 2020</span>
+        <div class="role"><strong>Founding Dean</strong> <span class="org">· School of Computing and Information, University of Pittsburgh</span></div>
+      </li>
+      <li>
+        <span class="year">2013 – 2017</span>
+        <div class="role"><strong>Program Manager</strong> <span class="org">· Information Innovation Office, DARPA</span></div>
+      </li>
+      <li>
+        <span class="year">2025 – present</span>
+        <div class="role"><strong>CEO</strong> <span class="org">· Causerie.AI Inc.</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="publications">
+    <div class="section-label">Publications &amp; Writing</div>
+    <ul class="pub-list">
+      <li>
+        <span class="pub-title"><a href="cohen-vita-abridged.pdf">Curriculum Vitae</a></span>
+        <span class="pub-meta">PDF</span>
+      </li>
+      <li>
+        <span class="pub-title"><a href="publications.html">Full Publications List</a></span>
+        <span class="pub-meta">Bibliography</span>
+      </li>
+      <li>
+        <span class="pub-title"><a href="opinions.html">Opinions and Essays</a></span>
+        <span class="pub-meta">Writing</span>
+      </li>
+      <li>
+        <span class="pub-title"><a href="videos.html">Talks and Videos</a></span>
+        <span class="pub-meta">Media</span>
+      </li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="label">University</div>
+        <a href="mailto:prcohen@pitt.edu">prcohen@pitt.edu</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Personal</div>
+        <a href="mailto:paulrcohen@gmail.com">paulrcohen@gmail.com</a>
+      </div>
+    </div>
+  </section>
 
 </div>
+
+<footer>
+  <div class="page">
+    <p>Paul Cohen · University of Pittsburgh</p>
+  </div>
+</footer>
+
 </body>
 </html>
